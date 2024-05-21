@@ -7,3 +7,6 @@ public class Main
         aplicacao.setVisible(true);
     }
 }
+
+
+// ADD BOTAO DE APAGAR ULTIMO NUMERO DIGITADO

@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 import java.util.Objects;
 
 public class Botoes
@@ -25,7 +26,9 @@ public class Botoes
         }
     }
 
-    String texto = null;
+    String texto = "";
+    StringBuilder textoBuilder = new StringBuilder(texto);
+    LinkedList<String> list = new LinkedList<>();
 
     public void clickBotoes(JTextField campoDigito)
     {
@@ -42,14 +45,30 @@ public class Botoes
                     opDigits[1] = "√";
 
                     if (texto == null && j != 2)
-                        texto = opDigits[j];
+                        list.add(opDigits[j]);
 
-                    else if (j == 2)
-                        texto = null;
+                    else if (j == 2 && !list.isEmpty())
+                        list.clear();
 
-                    else
-                        texto += opDigits[j];
+                    else if (j == 3 && !list.isEmpty())
+                        list.remove(list.size() - 1);
+
+                    else if (j != 3)
+                    {
+                        list.add(opDigits[j]);
+                    }
+
+                    textoBuilder = new StringBuilder();
+
+                    for (String s : list)
+                    {
+                        textoBuilder.append(s);
+                    }
+
+                    texto = textoBuilder.toString();
+
                     campoDigito.setText(texto);
+
                 }
             });
         }
