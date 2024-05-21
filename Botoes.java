@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
-import java.util.Objects;
 
 public class Botoes
 {
@@ -28,12 +27,13 @@ public class Botoes
 
     String texto = "";
     StringBuilder textoBuilder = new StringBuilder(texto);
-    LinkedList<String> list = new LinkedList<>();
+    LinkedList<String> numerosDigitados = new LinkedList<>();
 
     public void clickBotoes(JTextField campoDigito)
     {
         for (int i = 0; i < opSize; i++)
         {
+
             int j = i;
 
             botoes[i].addActionListener(new ActionListener()
@@ -44,33 +44,44 @@ public class Botoes
                     opDigits[0] = "²";
                     opDigits[1] = "√";
 
-                    if (texto == null && j != 2)
-                        list.add(opDigits[j]);
-
-                    else if (j == 2 && !list.isEmpty())
-                        list.clear();
-
-                    else if (j == 3 && !list.isEmpty())
-                        list.remove(list.size() - 1);
-
-                    else if (j != 3)
-                    {
-                        list.add(opDigits[j]);
-                    }
-
                     textoBuilder = new StringBuilder();
-
-                    for (String s : list)
-                    {
-                        textoBuilder.append(s);
-                    }
-
-                    texto = textoBuilder.toString();
+                    numerosDigitados = regrasBotoes(j, numerosDigitados);
+                    texto = criaString();
 
                     campoDigito.setText(texto);
-
                 }
             });
         }
+    }
+
+    public LinkedList<String> regrasBotoes(int i, LinkedList<String> list)
+    {
+            if (texto == null && i != 2)
+                list.add(opDigits[i]);
+
+            else if (i == 2 && !list.isEmpty())
+                list.clear();
+
+            else if (i == 3 && !list.isEmpty())
+                list.removeLast();
+
+            else if (i != 3)
+            {
+                list.add(opDigits[i]);
+            }
+
+        return list;
+    }
+
+    public String criaString()
+    {
+        for (String s : numerosDigitados)
+        {
+            textoBuilder.append(s);
+        }
+
+        texto = textoBuilder.toString();
+
+        return texto;
     }
 }
