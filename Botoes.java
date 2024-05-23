@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 public class Botoes
@@ -28,29 +26,43 @@ public class Botoes
     String texto = "";
     StringBuilder textoBuilder = new StringBuilder(texto);
     LinkedList<String> numerosDigitados = new LinkedList<>();
+    int contagemNumeros = 0;
 
-    public void clickBotoes(JTextField campoDigito)
+    public void clickBotoes(JTextPane campoDigito)
     {
+
+        numerosDigitados.add("\n");
+        numerosDigitados.add("\n");
+        numerosDigitados.add("\n");
+        numerosDigitados.add("\n");
+
         for (int i = 0; i < opSize; i++)
         {
 
             int j = i;
 
-            botoes[i].addActionListener(new ActionListener()
+            botoes[i].addActionListener(e ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
+                opDigits[0] = "²";
+                opDigits[1] = "√";
+
+                textoBuilder = new StringBuilder();
+                numerosDigitados = regrasBotoes(j, numerosDigitados);
+
+                contagemNumeros++;
+
+                if (contagemNumeros % 24 == 0)
                 {
-                    opDigits[0] = "²";
-                    opDigits[1] = "√";
-
-                    textoBuilder = new StringBuilder();
-                    numerosDigitados = regrasBotoes(j, numerosDigitados);
-                    texto = criaString();
-
-                    campoDigito.setText(texto);
+                    if (contagemNumeros < 88)
+                        numerosDigitados.remove("\n");
+                    numerosDigitados.add("\n");
                 }
+
+                texto = criaString();
+
+                campoDigito.setText(texto);
             });
+
         }
     }
 
@@ -60,7 +72,13 @@ public class Botoes
                 list.add(opDigits[i]);
 
             else if (i == 2 && !list.isEmpty())
+            {
                 list.clear();
+                numerosDigitados.add("\n");
+                numerosDigitados.add("\n");
+                numerosDigitados.add("\n");
+                numerosDigitados.add("\n");
+            }
 
             else if (i == 3 && !list.isEmpty())
                 list.removeLast();
