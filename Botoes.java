@@ -31,10 +31,7 @@ public class Botoes
     public void clickBotoes(JTextPane campoDigito)
     {
 
-        numerosDigitados.add("\n");
-        numerosDigitados.add("\n");
-        numerosDigitados.add("\n");
-        numerosDigitados.add("\n");
+        manageBreakLine(numerosDigitados, 1);
 
         for (int i = 0; i < opSize; i++)
         {
@@ -74,14 +71,21 @@ public class Botoes
             else if (i == 2 && !list.isEmpty())
             {
                 list.clear();
-                numerosDigitados.add("\n");
-                numerosDigitados.add("\n");
-                numerosDigitados.add("\n");
-                numerosDigitados.add("\n");
+                manageBreakLine(list, 1);
             }
 
             else if (i == 3 && !list.isEmpty())
                 list.removeLast();
+
+            else if (i == 19)
+            {
+                System.out.println("clube atletico mineiro");
+                manageBreakLine(list, 2);
+                texto = BotaoIgual.botaoIgual(list);
+                list.clear();
+                manageBreakLine(list, 1);
+                list.add(texto);
+            }
 
             else if (i != 3)
             {
@@ -101,5 +105,17 @@ public class Botoes
         texto = textoBuilder.toString();
 
         return texto;
+    }
+
+    public void manageBreakLine(LinkedList<String> list, int n)
+    {
+        if (n == 1)
+            for(int i = 0; i < 4; i++)
+                list.add("\n");
+
+        else
+            for(int i = 0; i < 4; i++)
+                list.remove("\n");
+
     }
 }
