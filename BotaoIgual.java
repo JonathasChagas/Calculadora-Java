@@ -7,25 +7,64 @@ public class BotaoIgual
 
         Botoes botoes = new Botoes();
         StringBuilder numeros = new StringBuilder();
+        numeros.append('1');
         StringBuilder numeros2 = new StringBuilder();
+        numeros2.append('1');
+        String operador = "+";
         boolean verdadeiro = true;
 
         for (String s : list)
         {
-            if (!s.equals("+") && verdadeiro)
-                numeros.append(s);
+            if (s.equals("+") || s.equals("-") || s.equals("x") || s.equals("/") || s.equals("²") || s.equals("√")){
+                operador = s;
+                break;
+            }
+        }
 
-            else if (s.equals("+") && verdadeiro)
+
+        for (String s : list)
+        {
+            if (!s.equals(operador) && verdadeiro)
+            {
+                numeros.deleteCharAt(0);
+                numeros.append(s);
+            }
+
+            else if (s.equals(operador) && verdadeiro)
                 verdadeiro = false;
 
             else
-                numeros2.append(s);
+            {
+                if (s.matches("[0-9.]+"))
+                {
+                    numeros2.append(s);
+                }
+
+                else
+                    break;
+            }
         }
 
-        int numero = Integer.parseInt(numeros.toString());
-        int numero2 = Integer.parseInt(numeros2.toString());
+        numeros2.deleteCharAt(0);
+        double numero = Double.parseDouble(numeros.toString());
+        double numero2 = Double.parseDouble(numeros2.toString());
 
-        return "Resultado: " + (numero + numero2);
+        if (numero2 == 0 && operador.equals("/"))
+        {
+            return "Divisão por 0 é impossível";
+        }
+
+
+        return switch (operador)
+        {
+            case "+" -> "Resultado: " + (numero + numero2);
+            case "-" -> "Resultado: " + (numero - numero2);
+            case "x" -> "Resultado: " + (numero * numero2);
+            case "/" -> "Resultado: " + (numero / numero2);
+            case "²" -> "Resultado: " + (numero * numero);
+            case "√" -> "Resultado: " + (Math.sqrt(numero2));
+            default -> null;
+        };
 
     }
 }

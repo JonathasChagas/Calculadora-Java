@@ -79,7 +79,6 @@ public class Botoes
 
             else if (i == 19)
             {
-                System.out.println("clube atletico mineiro");
                 manageBreakLine(list, 2);
                 texto = BotaoIgual.botaoIgual(list);
                 list.clear();
