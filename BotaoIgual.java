@@ -12,6 +12,7 @@ public class BotaoIgual
         numeros2.append('1');
         String operador = "+";
         boolean verdadeiro = true;
+        boolean primeiraIteracao = true;
 
         for (String s : list)
         {
@@ -21,13 +22,18 @@ public class BotaoIgual
             }
         }
 
-
         for (String s : list)
         {
             if (!s.equals(operador) && verdadeiro)
             {
-                numeros.deleteCharAt(0);
+                if (primeiraIteracao)
+                {
+                    numeros.deleteCharAt(0);
+                    primeiraIteracao = false;
+                }
+
                 numeros.append(s);
+                System.out.println();
             }
 
             else if (s.equals(operador) && verdadeiro)
@@ -46,7 +52,9 @@ public class BotaoIgual
         }
 
         numeros2.deleteCharAt(0);
+        System.out.println(numeros);
         double numero = Double.parseDouble(numeros.toString());
+        System.out.println(numero);
         double numero2 = Double.parseDouble(numeros2.toString());
 
         if (numero2 == 0 && operador.equals("/"))
